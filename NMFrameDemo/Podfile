@@ -1,0 +1,7 @@
+platform :ios, '9.0'
+
+target 'NMFrameDemo' do
+
+pod 'ReactiveObjC', '3.1.0'
+
+end
