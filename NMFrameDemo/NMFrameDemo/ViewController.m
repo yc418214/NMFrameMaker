@@ -8,7 +8,8 @@
 
 #import "ViewController.h"
 
-#import "UIView+NMFrameMaker.h"
+//header
+#import "NMFrameHeader.h"
 
 @interface ViewController ()
 
@@ -19,6 +20,10 @@
 @property (nonatomic, strong) UILabel *labelTwo;
 
 @property (nonatomic, strong) UILabel *labelThree;
+
+@property (nonatomic, strong) UILabel *labelFour;
+
+@property (nonatomic, strong) UILabel *labelFive;
 
 @property (nonatomic, strong) UIButton *buttonOne;
 
@@ -91,6 +96,16 @@
     self.viewThree.layer.borderColor = [UIColor redColor].CGColor;
     [self.view addSubview:self.viewThree];
     
+    self.labelFour = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.labelFour.text = @"top label";
+    self.labelFour.layer.borderWidth = 1.f;
+    [self.viewThree addSubview:self.labelFour];
+    
+    self.labelFive = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.labelFive.text = @"bottom label";
+    self.labelFive.layer.borderWidth = 1.f;
+    [self.viewThree addSubview:self.labelFive];
+    
     NSInteger tag = 1;
     for (UIView *subview in self.view.subviews) {
         subview.tag = tag;
@@ -155,6 +170,10 @@ static NSInteger layoutCount = 0;
         make.height.equalTo(self.viewOne).multipliedBy(0.5);
         make.top.equalTo(self.viewOne.nm_bottom);
         make.centerX.equalTo(self.view);
+    }];
+    
+    [UIView nm_combine:^(NMFrameCombination *combination) {
+        combination.combine(self.labelFour).with(self.labelFive).verticalInView(self.viewThree).offset(12);
     }];
 }
 

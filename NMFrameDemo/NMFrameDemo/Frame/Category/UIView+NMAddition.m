@@ -26,12 +26,12 @@
     return self.frame.origin.y;
 }
 
-- (NSNumber *)nm_centerX {
-    return @(self.center.x);
+- (CGFloat)nm_centerX {
+    return self.center.x;
 }
 
-- (NSNumber *)nm_centerY {
-    return @(self.center.y);
+- (CGFloat)nm_centerY {
+    return self.center.y;
 }
 
 - (void)setNm_width:(CGFloat)nm_width {
@@ -57,15 +57,15 @@
     self.frame = frame;
 }
 
-- (void)setNm_centerX:(NSNumber *)nm_centerX {
+- (void)setNm_centerX:(CGFloat)nm_centerX {
     CGPoint center = self.center;
-    center.x = nm_centerX.floatValue;
+    center.x = nm_centerX;
     self.center = center;
 }
 
-- (void)setNm_centerY:(NSNumber *)nm_centerY {
+- (void)setNm_centerY:(CGFloat)nm_centerY {
     CGPoint center = self.center;
-    center.y = nm_centerY.floatValue;
+    center.y = nm_centerY;
     self.center = center;
 }
 

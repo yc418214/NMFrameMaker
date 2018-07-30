@@ -21,11 +21,13 @@
 @implementation UIView (NMFrameMaker)
 
 - (void)nm_makeFrame:(NMMakeFrameBlock)makeBlock {
+    if (!makeBlock) {
+        return;
+    }
     if (self.nm_frameMaker) {
         [self.nm_frameMaker commit];
         return;
     }
-
     NMFrameMaker *maker = [NMFrameMaker makerWithView:self];
     makeBlock(maker);
     [maker commit];
@@ -52,6 +54,9 @@
 }
 
 - (void)nm_updateFrame:(NMMakeFrameBlock)makeBlock {
+    if (!makeBlock) {
+        return;
+    }
     if (!self.nm_frameMaker) {
         return;
     }

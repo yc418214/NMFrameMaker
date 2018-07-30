@@ -54,6 +54,7 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
 #pragma mark - public methods
 
 - (void)commit {
+    CGRect previousBounds = self.view.bounds;
     CGRect previousRect = self.view.frame;
     
     CGFloat left = CGFLOAT_MAX;
@@ -296,7 +297,10 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
                                    HAS_SET(centerY) ? centerY : (top + height / 2));
     
     if (!CGRectEqualToRect(previousRect, self.view.frame)) {
-        [self.view.boundsDidUpdateSignal sendNext:nil];
+        [self.view.frameDidUpdateSignal sendNext:nil];
+    }
+    if (!CGRectEqualToRect(previousBounds, self.view.bounds)) {
+        [self.view.updateCombinationSignal sendNext:nil];
     }
 }
 
@@ -308,7 +312,7 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
     }
     [self.view.nm_relativeViewHashTable addObject:relativeView];
     @weakify(self);
-    [[relativeView.boundsDidUpdateSignal takeUntil:self.rac_willDeallocSignal] subscribeNext:^(id x) {
+    [[relativeView.frameDidUpdateSignal takeUntil:self.rac_willDeallocSignal] subscribeNext:^(id x) {
         @strongify(self);
         [self commit];
     }];

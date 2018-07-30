@@ -12,8 +12,8 @@
 
 @property (nonatomic, assign) CGFloat nm_width;
 @property (nonatomic, assign) CGFloat nm_height;
-@property (nonatomic, assign) NSNumber *nm_centerX;
-@property (nonatomic, assign) NSNumber * nm_centerY;
+@property (nonatomic, assign) CGFloat nm_centerX;
+@property (nonatomic, assign) CGFloat nm_centerY;
 @property (nonatomic, assign) CGFloat nm_x;
 @property (nonatomic, assign) CGFloat nm_y;
 

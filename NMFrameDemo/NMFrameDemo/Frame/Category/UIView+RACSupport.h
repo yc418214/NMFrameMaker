@@ -12,7 +12,9 @@
 
 @interface UIView (RACSupport)
 
-@property (nonatomic, strong) RACSubject *boundsDidUpdateSignal;
+@property (nonatomic, strong) RACSubject *frameDidUpdateSignal;
+
+@property (nonatomic, strong) RACSubject *updateCombinationSignal;
 
 @property (nonatomic, strong) NSHashTable *nm_relativeViewHashTable;
 

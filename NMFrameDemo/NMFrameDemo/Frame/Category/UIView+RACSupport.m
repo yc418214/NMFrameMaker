@@ -14,13 +14,22 @@
 
 #pragma mark - getter
 
-- (RACSubject *)boundsDidUpdateSignal {
-    RACSubject *boundsDidUpdateSignal = objc_getAssociatedObject(self, @selector(boundsDidUpdateSignal));
-    if (!boundsDidUpdateSignal) {
-        boundsDidUpdateSignal = [RACSubject subject];
-        self.boundsDidUpdateSignal = boundsDidUpdateSignal;
+- (RACSubject *)frameDidUpdateSignal {
+    RACSubject *frameDidUpdateSignal = objc_getAssociatedObject(self, @selector(frameDidUpdateSignal));
+    if (!frameDidUpdateSignal) {
+        frameDidUpdateSignal = [RACSubject subject];
+        self.frameDidUpdateSignal = frameDidUpdateSignal;
     }
-    return boundsDidUpdateSignal;
+    return frameDidUpdateSignal;
+}
+
+- (RACSubject *)updateCombinationSignal {
+    RACSubject *updateCombinationSignal = objc_getAssociatedObject(self, @selector(updateCombinationSignal));
+    if (!updateCombinationSignal) {
+        updateCombinationSignal = [RACSubject subject];
+        self.updateCombinationSignal = updateCombinationSignal;
+    }
+    return updateCombinationSignal;
 }
 
 - (NSHashTable *)nm_relativeViewHashTable {
@@ -34,10 +43,17 @@
 
 #pragma mark - setter
 
-- (void)setBoundsDidUpdateSignal:(RACSubject *)boundsDidUpdateSignal {
+- (void)setFrameDidUpdateSignal:(RACSubject *)frameDidUpdateSignal {
     objc_setAssociatedObject(self,
-                             @selector(boundsDidUpdateSignal),
-                             boundsDidUpdateSignal,
+                             @selector(frameDidUpdateSignal),
+                             frameDidUpdateSignal,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)setUpdateCombinationSignal:(RACSubject *)updateCombinationSignal {
+    objc_setAssociatedObject(self,
+                             @selector(updateCombinationSignal),
+                             updateCombinationSignal,
                              OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 

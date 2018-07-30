@@ -22,6 +22,8 @@
 		45ADF04D210B157F001B20D8 /* NMFrameMakerType.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ADF040210B157F001B20D8 /* NMFrameMakerType.m */; };
 		45ADF04E210B157F001B20D8 /* NMFrameMakerDirection.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ADF041210B157F001B20D8 /* NMFrameMakerDirection.m */; };
 		45ADF04F210B157F001B20D8 /* NMFrameMakerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ADF046210B157F001B20D8 /* NMFrameMakerOperation.m */; };
+		45ADF052210EF105001B20D8 /* UIView+NMCombination.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ADF051210EF105001B20D8 /* UIView+NMCombination.m */; };
+		45ADF055210EF154001B20D8 /* NMFrameCombination.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ADF054210EF154001B20D8 /* NMFrameCombination.m */; };
 		473DF1DECBD2F8150DF55F26 /* libPods-NMFrameDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09047324E8CDF23EDC5F3C6F /* libPods-NMFrameDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,11 @@
 		45ADF044210B157F001B20D8 /* NMFrameMakerType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMFrameMakerType.h; sourceTree = "<group>"; };
 		45ADF045210B157F001B20D8 /* NMFrameMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMFrameMaker.h; sourceTree = "<group>"; };
 		45ADF046210B157F001B20D8 /* NMFrameMakerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMFrameMakerOperation.m; sourceTree = "<group>"; };
+		45ADF050210EF105001B20D8 /* UIView+NMCombination.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+NMCombination.h"; sourceTree = "<group>"; };
+		45ADF051210EF105001B20D8 /* UIView+NMCombination.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+NMCombination.m"; sourceTree = "<group>"; };
+		45ADF053210EF154001B20D8 /* NMFrameCombination.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMFrameCombination.h; sourceTree = "<group>"; };
+		45ADF054210EF154001B20D8 /* NMFrameCombination.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMFrameCombination.m; sourceTree = "<group>"; };
+		45ADF056210EFB16001B20D8 /* NMFrameHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMFrameHeader.h; sourceTree = "<group>"; };
 		5E155A672DCEE4AFCDE80403 /* Pods-NMFrameDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NMFrameDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-NMFrameDemo/Pods-NMFrameDemo.release.xcconfig"; sourceTree = "<group>"; };
 		AE8604FA00313ABEABB90892 /* Pods-NMFrameDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NMFrameDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NMFrameDemo/Pods-NMFrameDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +135,8 @@
 				45ADF037210B157F001B20D8 /* UIView+RACSupport.m */,
 				45ADF039210B157F001B20D8 /* UIView+NMFrameDirection.h */,
 				45ADF035210B157F001B20D8 /* UIView+NMFrameDirection.m */,
+				45ADF050210EF105001B20D8 /* UIView+NMCombination.h */,
+				45ADF051210EF105001B20D8 /* UIView+NMCombination.m */,
 				45ADF03A210B157F001B20D8 /* NMFrameMaker+NMFrameType.h */,
 				45ADF034210B157F001B20D8 /* NMFrameMaker+NMFrameType.m */,
 			);
@@ -138,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				45ADF03D210B157F001B20D8 /* NMFrameMacros.h */,
+				45ADF056210EFB16001B20D8 /* NMFrameHeader.h */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -153,6 +163,8 @@
 				45ADF041210B157F001B20D8 /* NMFrameMakerDirection.m */,
 				45ADF042210B157F001B20D8 /* NMFrameMakerOperation.h */,
 				45ADF046210B157F001B20D8 /* NMFrameMakerOperation.m */,
+				45ADF053210EF154001B20D8 /* NMFrameCombination.h */,
+				45ADF054210EF154001B20D8 /* NMFrameCombination.m */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -301,8 +313,10 @@
 				45ADF048210B157F001B20D8 /* UIView+NMFrameDirection.m in Sources */,
 				45ADF049210B157F001B20D8 /* UIView+RACSupport.m in Sources */,
 				45ADF04B210B157F001B20D8 /* UIView+NMFrameMaker.m in Sources */,
+				45ADF052210EF105001B20D8 /* UIView+NMCombination.m in Sources */,
 				45ADF04E210B157F001B20D8 /* NMFrameMakerDirection.m in Sources */,
 				45ADF04D210B157F001B20D8 /* NMFrameMakerType.m in Sources */,
+				45ADF055210EF154001B20D8 /* NMFrameCombination.m in Sources */,
 				455FE58D2101B988003722BF /* ViewController.m in Sources */,
 				45ADF04C210B157F001B20D8 /* NMFrameMaker.m in Sources */,
 				45ADF04A210B157F001B20D8 /* UIView+NMAddition.m in Sources */,
