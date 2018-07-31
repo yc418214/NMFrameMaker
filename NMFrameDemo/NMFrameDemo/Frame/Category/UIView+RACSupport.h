@@ -10,6 +10,8 @@
 
 #import <ReactiveObjC/ReactiveObjC.h>
 
+#define NM_CUSTOM_UPDATE_FRAME_SIGNAL(__object, __selector)     [__object rac_signalForSelector:@selector(__selector)]
+
 @interface UIView (RACSupport)
 
 @property (nonatomic, strong) RACSignal *customUpdateFrameSignal;

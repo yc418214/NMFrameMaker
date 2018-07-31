@@ -49,6 +49,8 @@
     self.labelOne = [[UILabel alloc] initWithFrame:CGRectZero];
     self.labelOne.text = @"这是一个很长很长很长很长很长的label";
     self.labelOne.layer.borderWidth = 1.f;
+    self.labelOne.nm_updateWhenTextChange = NO;
+    self.labelOne.customUpdateFrameSignal = NM_CUSTOM_UPDATE_FRAME_SIGNAL(self, updateLabelOne);
     [self.view addSubview:self.labelOne];
     
     self.labelTwo = [[UILabel alloc] initWithFrame:CGRectZero];
