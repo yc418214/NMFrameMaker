@@ -28,29 +28,18 @@
         [self.nm_frameMaker commit];
         return;
     }
+    if (self.nm_remakeWhenContentChange) {
+        if ([self isKindOfClass:[UILabel class]]) {
+            self.customUpdateFrameSignal = [self rac_signalForSelector:@selector(setText:)];
+        } else if ([self isKindOfClass:[UIButton class]]) {
+            self.customUpdateFrameSignal = [((UIButton *)self).titleLabel rac_signalForSelector:@selector(setText:)];
+        }
+    }
+    
     NMFrameMaker *maker = [NMFrameMaker makerWithView:self];
     makeBlock(maker);
     [maker commit];
     self.nm_frameMaker = maker;
-    
-    if (!self.nm_remakeWhenContentChange) {
-        return;
-    }
-    
-    @weakify(self);
-    if ([self isKindOfClass:[UILabel class]]) {
-        [[RACObserve(((UILabel *)self), text) skip:1] subscribeNext:^(id x) {
-            @strongify(self);
-            [self sizeToFit];
-            [self updateLayout];
-        }];
-    } else if ([self isKindOfClass:[UIButton class]]) {
-        [[RACObserve(((UIButton *)self).titleLabel, text) skip:1] subscribeNext:^(id x) {
-            @strongify(self);
-            [self sizeToFit];
-            [self updateLayout];
-        }];
-    }
 }
 
 - (void)nm_updateFrame:(NMMakeFrameBlock)makeBlock {

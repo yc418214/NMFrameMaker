@@ -22,6 +22,8 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
     NMGreaterThanOrEqualToFrameTypeHeight   = 1 << 1
 };
 
+static char *kObserveCustomUpdateFrameKey;
+
 @interface NMFrameMaker ()
 
 @property (nonatomic, weak) UIView *view;
@@ -40,6 +42,7 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
     NMFrameMaker *frameMaker = [[NMFrameMaker alloc] init];
     frameMaker.view = view;
     
+#warning 这里考虑把sizeToFit放在每次commit，还是看具体情况手动调用
     @weakify(frameMaker, view);
     [[view rac_signalForSelector:@selector(sizeToFit)] subscribeNext:^(RACTuple *x) {
         @strongify(frameMaker, view);
@@ -47,6 +50,8 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
         frameMaker.originalHeight = view.nm_height;
     }];
     [view sizeToFit];
+    
+    [frameMaker observeCustomUpdateFrameSignal];
     
     return frameMaker;
 }
@@ -305,6 +310,22 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
 }
 
 #pragma mark - private methods
+
+- (void)observeCustomUpdateFrameSignal {
+    if (!self.view.customUpdateFrameSignal) {
+        return;
+    }
+    if ([objc_getAssociatedObject(self.view, &kObserveCustomUpdateFrameKey) boolValue]) {
+        return;
+    }
+    @weakify(self);
+    [[self.view.customUpdateFrameSignal takeUntil:self.rac_willDeallocSignal] subscribeNext:^(id x) {
+        @strongify(self);
+        [self.view sizeToFit];
+        [self commit];
+    }];
+    objc_setAssociatedObject(self, &kObserveCustomUpdateFrameKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (void)addAndObserveRelativeView:(UIView *)relativeView {
     if ([self.view.nm_relativeViewHashTable containsObject:relativeView]) {

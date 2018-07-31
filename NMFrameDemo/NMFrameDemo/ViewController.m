@@ -47,8 +47,9 @@
     [self.view addSubview:self.imageView];
     
     self.labelOne = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.labelOne.text = @"这是一个很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的label";
+    self.labelOne.text = @"这是一个很长很长很长很长很长的label";
     self.labelOne.layer.borderWidth = 1.f;
+    self.labelOne.customUpdateFrameSignal = [self rac_signalForSelector:@selector(updateLabelOne)];
     [self.view addSubview:self.labelOne];
     
     self.labelTwo = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -205,6 +206,12 @@ static NSInteger count = 0;
         make.top.equalTo(self.viewOne.nm_bottom).offset(12);
         make.centerX.equalTo(self.view);
     }];
+    
+    [self updateLabelOne];
+}
+
+- (void)updateLabelOne {
+    self.labelOne.text = [self.labelOne.text substringToIndex:self.labelOne.text.length - 1];
 }
 
 @end

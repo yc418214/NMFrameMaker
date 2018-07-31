@@ -14,6 +14,10 @@
 
 #pragma mark - getter
 
+- (RACSignal *)customUpdateFrameSignal {
+    return objc_getAssociatedObject(self, @selector(customUpdateFrameSignal));
+}
+
 - (RACSubject *)frameDidUpdateSignal {
     RACSubject *frameDidUpdateSignal = objc_getAssociatedObject(self, @selector(frameDidUpdateSignal));
     if (!frameDidUpdateSignal) {
@@ -42,6 +46,13 @@
 }
 
 #pragma mark - setter
+
+- (void)setCustomUpdateFrameSignal:(RACSignal *)customUpdateFrameSignal {
+    objc_setAssociatedObject(self,
+                             @selector(customUpdateFrameSignal),
+                             customUpdateFrameSignal,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (void)setFrameDidUpdateSignal:(RACSubject *)frameDidUpdateSignal {
     objc_setAssociatedObject(self,
