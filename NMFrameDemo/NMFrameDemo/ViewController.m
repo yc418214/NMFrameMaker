@@ -49,14 +49,11 @@
     self.labelOne = [[UILabel alloc] initWithFrame:CGRectZero];
     self.labelOne.text = @"这是一个很长很长很长很长很长的label";
     self.labelOne.layer.borderWidth = 1.f;
-    self.labelOne.customUpdateFrameSignal = [self rac_signalForSelector:@selector(updateLabelOne)];
     [self.view addSubview:self.labelOne];
     
     self.labelTwo = [[UILabel alloc] initWithFrame:CGRectZero];
     self.labelTwo.text = @"这是一个很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的label";
     self.labelTwo.layer.borderWidth = 1.f;
-#warning 考虑放在外部设置还是内部默认YES
-    self.labelTwo.nm_remakeWhenContentChange = YES;
     [self.view addSubview:self.labelTwo];
 
     self.labelThree = [[UILabel alloc] initWithFrame:CGRectZero];

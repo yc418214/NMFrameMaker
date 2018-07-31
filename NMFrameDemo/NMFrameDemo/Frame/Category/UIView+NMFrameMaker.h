@@ -16,7 +16,9 @@ typedef void(^NMMakeFrameBlock)(NMFrameMaker *make);
 
 @interface UIView (NMFrameMaker)
 
-@property (nonatomic, assign) BOOL nm_remakeWhenContentChange;
+//当文字内容变化时是否更新UI
+//仅对UILabel或者UIButton有效，默认是YES
+@property (nonatomic, assign) BOOL nm_updateWhenTextChange;
 
 - (void)nm_makeFrame:(NMMakeFrameBlock)makeBlock;
 

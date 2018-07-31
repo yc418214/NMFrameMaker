@@ -28,12 +28,10 @@
         [self.nm_frameMaker commit];
         return;
     }
-    if (self.nm_remakeWhenContentChange) {
-        if ([self isKindOfClass:[UILabel class]]) {
-            self.customUpdateFrameSignal = [self rac_signalForSelector:@selector(setText:)];
-        } else if ([self isKindOfClass:[UIButton class]]) {
-            self.customUpdateFrameSignal = [((UIButton *)self).titleLabel rac_signalForSelector:@selector(setText:)];
-        }
+    if ([self isKindOfClass:[UILabel class]] && self.nm_updateWhenTextChange) {
+        self.customUpdateFrameSignal = [self rac_signalForSelector:@selector(setText:)];
+    } else if ([self isKindOfClass:[UIButton class]] && self.nm_updateWhenTextChange) {
+        self.customUpdateFrameSignal = [((UIButton *)self).titleLabel rac_signalForSelector:@selector(setText:)];
     }
     
     NMFrameMaker *maker = [NMFrameMaker makerWithView:self];
@@ -74,8 +72,15 @@
     return objc_getAssociatedObject(self, @selector(nm_frameMaker));
 }
 
-- (BOOL)nm_remakeWhenContentChange {
-    return [objc_getAssociatedObject(self, @selector(nm_remakeWhenContentChange)) boolValue];
+- (BOOL)nm_updateWhenTextChange {
+    NSNumber *updateWhenTextChange = objc_getAssociatedObject(self, @selector(nm_updateWhenTextChange));
+    if (!updateWhenTextChange) {
+        BOOL isLabel = [self isKindOfClass:[UILabel class]];
+        BOOL isButton = [self isKindOfClass:[UIButton class]];
+        updateWhenTextChange = @((isLabel || isButton));
+        self.nm_updateWhenTextChange = updateWhenTextChange;
+    }
+    return [updateWhenTextChange boolValue];
 }
 
 #pragma mark - setter
@@ -87,10 +92,10 @@
                              OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)setNm_remakeWhenContentChange:(BOOL)nm_remakeWhenContentChange {
+- (void)setNm_updateWhenTextChange:(BOOL)nm_updateWhenTextChange {
     objc_setAssociatedObject(self,
-                             @selector(nm_remakeWhenContentChange),
-                             @(nm_remakeWhenContentChange),
+                             @selector(nm_updateWhenTextChange),
+                             @(nm_updateWhenTextChange),
                              OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 

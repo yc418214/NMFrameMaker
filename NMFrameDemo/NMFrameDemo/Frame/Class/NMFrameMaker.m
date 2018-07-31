@@ -42,7 +42,7 @@ static char *kObserveCustomUpdateFrameKey;
     NMFrameMaker *frameMaker = [[NMFrameMaker alloc] init];
     frameMaker.view = view;
     
-#warning 这里考虑把sizeToFit放在每次commit，还是看具体情况手动调用
+    //这里考虑把sizeToFit放在每次commit，还是看具体情况手动调用
     @weakify(frameMaker, view);
     [[view rac_signalForSelector:@selector(sizeToFit)] subscribeNext:^(RACTuple *x) {
         @strongify(frameMaker, view);
