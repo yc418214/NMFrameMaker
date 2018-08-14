@@ -22,6 +22,7 @@ typedef NS_OPTIONS(NSInteger, NMGreaterThanOrEqualToFrameType) {
     NMGreaterThanOrEqualToFrameTypeHeight   = 1 << 1
 };
 
+static char *kObserveSizeToFitKey;
 static char *kObserveCustomUpdateFrameKey;
 
 @interface NMFrameMaker ()
@@ -42,17 +43,10 @@ static char *kObserveCustomUpdateFrameKey;
     NMFrameMaker *frameMaker = [[NMFrameMaker alloc] init];
     frameMaker.view = view;
     
-    //这里考虑把sizeToFit放在每次commit，还是看具体情况手动调用
-    @weakify(frameMaker, view);
-    [[view rac_signalForSelector:@selector(sizeToFit)] subscribeNext:^(RACTuple *x) {
-        @strongify(frameMaker, view);
-        frameMaker.originalWidth = view.nm_width;
-        frameMaker.originalHeight = view.nm_height;
-    }];
+    [frameMaker observeSizeToFit];
     [view sizeToFit];
     
     [frameMaker observeCustomUpdateFrameSignal];
-    
     return frameMaker;
 }
 
@@ -297,9 +291,9 @@ static char *kObserveCustomUpdateFrameKey;
         top = HAS_SET(top) ? top : 0;
     }
     
-    self.view.bounds = CGRectMake(0, 0, width, height);
-    self.view.center = CGPointMake(HAS_SET(centerX) ? centerX : (left + width / 2),
-                                   HAS_SET(centerY) ? centerY : (top + height / 2));
+    CGFloat minX = ceilf(HAS_SET(centerX) ? centerX - width / 2 : left);
+    CGFloat minY = ceilf(HAS_SET(centerY) ? centerY - height / 2 : top);
+    self.view.frame = CGRectMake(minX, minY, width, height);
     
     if (!CGRectEqualToRect(previousRect, self.view.frame)) {
         [self.view.frameDidUpdateSignal sendNext:nil];
@@ -310,6 +304,19 @@ static char *kObserveCustomUpdateFrameKey;
 }
 
 #pragma mark - private methods
+
+- (void)observeSizeToFit {
+    if ([objc_getAssociatedObject(self.view, &kObserveSizeToFitKey) boolValue]) {
+        return;
+    }
+    @weakify(self);
+    [[self.view rac_signalForSelector:@selector(sizeToFit)] subscribeNext:^(RACTuple *x) {
+        @strongify(self);
+        self.originalWidth = self.view.nm_width;
+        self.originalHeight = self.view.nm_height;
+    }];
+    objc_setAssociatedObject(self.view, &kObserveSizeToFitKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (void)observeCustomUpdateFrameSignal {
     if (!self.view.customUpdateFrameSignal) {
@@ -324,7 +331,7 @@ static char *kObserveCustomUpdateFrameKey;
         [self.view sizeToFit];
         [self commit];
     }];
-    objc_setAssociatedObject(self, &kObserveCustomUpdateFrameKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.view, &kObserveCustomUpdateFrameKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)addAndObserveRelativeView:(UIView *)relativeView {
