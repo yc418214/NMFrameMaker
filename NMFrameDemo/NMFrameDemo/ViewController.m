@@ -113,14 +113,8 @@
     }
 }
 
-static NSInteger layoutCount = 0;
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
-    if (layoutCount == 1) {
-        return;
-    }
-    layoutCount++;
     
     [self.imageView nm_makeFrame:^(NMFrameMaker *make) {
         make.left.equalTo(self.view).offset(12);

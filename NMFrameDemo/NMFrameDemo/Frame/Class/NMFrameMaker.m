@@ -50,6 +50,11 @@ static char *kObserveCustomUpdateFrameKey;
     return frameMaker;
 }
 
+- (void)dealloc {
+    objc_setAssociatedObject(_view, &kObserveSizeToFitKey, @(NO), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(_view, &kObserveCustomUpdateFrameKey, @(NO), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 #pragma mark - public methods
 
 - (void)commit {
@@ -310,7 +315,7 @@ static char *kObserveCustomUpdateFrameKey;
         return;
     }
     @weakify(self);
-    [[self.view rac_signalForSelector:@selector(sizeToFit)] subscribeNext:^(RACTuple *x) {
+    [[[self.view rac_signalForSelector:@selector(sizeToFit)] takeUntil:self.rac_willDeallocSignal] subscribeNext:^(RACTuple *x) {
         @strongify(self);
         self.originalWidth = self.view.nm_width;
         self.originalHeight = self.view.nm_height;
